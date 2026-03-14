@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Win10 激活工具 - KMS 激活脚本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full glass-card p-8 shadow-2xl text-white">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold mb-2 tracking-tight">Win10 激活助手</h1>
+            <p class="text-gray-200">快速、简单、免费的 KMS 激活命令工具</p>
+        </header>
+
+        <section class="space-y-6">
+            <!-- Command 1 -->
+            <div class="relative">
+                <label class="block text-sm font-medium mb-2 opacity-80">步骤 1: 安装 KMS 密钥</label>
+                <div class="flex items-center bg-gray-900/50 rounded-lg p-4 border border-white/10 group">
+                    <code id="cmd1" class="flex-1 font-mono text-blue-300 overflow-x-auto whitespace-nowrap">slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX</code>
+                    <button onclick="copyCmd('cmd1')" class="ml-4 p-2 hover:bg-white/10 rounded-md transition-all active:scale-95" title="复制">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Command 2 -->
+            <div class="relative">
+                <label class="block text-sm font-medium mb-2 opacity-80">步骤 2: 设置 KMS 服务器</label>
+                <div class="flex items-center bg-gray-900/50 rounded-lg p-4 border border-white/10 group">
+                    <code id="cmd2" class="flex-1 font-mono text-blue-300 overflow-x-auto whitespace-nowrap">slmgr /skms kms.03k.org</code>
+                    <button onclick="copyCmd('cmd2')" class="ml-4 p-2 hover:bg-white/10 rounded-md transition-all active:scale-95" title="复制">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Command 3 -->
+            <div class="relative">
+                <label class="block text-sm font-medium mb-2 opacity-80">步骤 3: 激活系统</label>
+                <div class="flex items-center bg-gray-900/50 rounded-lg p-4 border border-white/10 group">
+                    <code id="cmd3" class="flex-1 font-mono text-blue-300 overflow-x-auto whitespace-nowrap">slmgr /ato</code>
+                    <button onclick="copyCmd('cmd3')" class="ml-4 p-2 hover:bg-white/10 rounded-md transition-all active:scale-95" title="复制">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-12 text-center space-y-4">
+            <button onclick="downloadBat()" class="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-bold rounded-full hover:bg-indigo-50 transition-colors shadow-lg">
+                <i class="fas fa-download mr-2"></i> 下载一键激活脚本 (.bat)
+            </button>
+            <p class="text-xs opacity-60">提示：请确保以 管理员身份 运行命令提示符或下载的脚本。</p>
+        </footer >
+    </div>
+
+    <script>
+        function copyCmd(id) {
+            const cmd = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(cmd).then(() => {
+                alert('已复制到剪贴板: ' + cmd);
+            });
+        }
+
+        function downloadBat() {
+            const content = `@echo off\necho 正在激活 Windows 10...\nslmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX\nslmgr /skms kms.03k.org\nslmgr /ato\necho 激活操作已完成！\npause`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'activate_win10.bat';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
